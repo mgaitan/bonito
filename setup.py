@@ -7,6 +7,7 @@ setup(
     version=version,
     description="Generate a print & cut numerated tickets in PDF from a SVG template",
     author='Martín Gaitán',
+    long_description=open('README.rst').read(),
     author_email='gaitan@gmail.com',
     url='http://mgaitan.github.io/posts/bonito-feito-pero-efectivo/',
     license='BSD',

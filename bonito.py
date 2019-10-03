@@ -3,20 +3,20 @@
 Bonito
 
 Usage:
-  bonito <svg> [--desde=<desde>] [--hasta=<hasta>] [--grupos=<grupos>] [--planchas=<planchas>] [--marca=<marca>] [--repe=<repe>]
+  bonito <svg> [--desde=<desde>] [--group_by=<group_by>] [--documents=<documents>] [--mark=<mark>] [--repe=<repe>]
   bonito -h | --help
   bonito --version
 
 Options:
-  -h --help           Show this screen.
-  --version           Show version.
-  --desde=<desde>     Primer número [default: 0].
-  --hasta=<hasta>     Último número [default: 100].
-  --grupos=<hasta>    Tamaño talonario [default: 10].
-  --planchas=<hasta>  Repetir talon [default: 1].
-  --marca=<marca>     Marca a reemplaza [default: XXX]
-  --repe=<repe>       Incrementar cada [default: 2]  
-"""
+  --desde=<desde>           Starting number [default: 1].
+  --group_by=<group>        How many tickets per group [default: 10].
+  --documents=<documents>   How many documents [default: 1].
+  --mark=<marca>            Mark to be replaced. Determines the number of digits. [default: XXX]
+  --repe=<repe>             Marks on each ticket [default: 2]  
+  -h --help                 Show this screen.
+  --version                 Show version.
+  
+"""  
 
 
 from docopt import docopt
@@ -35,18 +35,17 @@ def main():
     arguments = docopt(__doc__, version='0.2')
     
     desde = int(arguments['--desde'])
-    hasta = int(arguments['--hasta'])
     repe = int(arguments['--repe'])
-    marca = arguments['--marca']
+    marca = arguments['--mark']
     svg_path = Path(arguments['<svg>'])
     svg_content = svg_path.read_text()
     number_by_page = int(svg_content.count(marca) / repe)
-    grouped_by =  int(arguments['--grupos'])
-    planchas =  int(arguments['--planchas'])
+    grouped_by =  int(arguments['--group_by'])
+    documents =  int(arguments['--documents'])
         
 
-    for plancha in range(planchas):
-        counter_from = desde + plancha * number_by_page * grouped_by
+    for document in range(documents):
+        counter_from = desde + document * number_by_page * grouped_by
 
 
         for pagina in range(grouped_by):
